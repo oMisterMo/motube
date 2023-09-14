@@ -1,6 +1,16 @@
 const express = require("express");
 const app = express();
 
+// Simple logger
+app.use((req, res, next) => {
+    if (req.path === "/") {
+        console.log("\n\nip: ", req.ip);
+    }
+    console.log(req.method, " ", req.path);
+
+    next();
+});
+
 app.use(express.static("public")); // Allows me to reference assets using /assets/x.png
 app.use(express.static("public/src")); // can reference files in /public/src directly
 
