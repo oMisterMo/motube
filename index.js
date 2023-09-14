@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+let timestamp = 0;
+
 // Simple logger
 app.use((req, res, next) => {
     if (req.path === "/") {
@@ -16,6 +18,11 @@ app.use(express.static("public/src")); // can reference files in /public/src dir
 
 app.get("/", (req, res) => {
     res.send("error, this should be overridden...!");
+});
+
+app.get("/timestamp", (req, res) => {
+    timestamp++;
+    res.send(timestamp.toString());
 });
 
 app.listen(3000, () => {
