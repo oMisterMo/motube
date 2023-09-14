@@ -1,0 +1,11 @@
+{
+    "editor.rulers": [],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "javascript.format.enable": false
+}
