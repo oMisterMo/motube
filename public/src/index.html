@@ -2,24 +2,24 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Motube</title>
 
     <!-- <link href="main.css" rel="stylesheet" /> -->
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
     <link href="../dist/output.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 
 <body class="antialiased font-sans">
     <div id="app" class="min-h-screen bg-cover bg-gray-100 flex flex-col" data-v-app="">
-
-
-
         <header class="flex flex-col bg-neutral-100 px-3 min-h-screen">
             <form class="flex-grow flex flex-col items-center justify-center" autocomplete="off">
                 <!-- Logo -->
-                <img src="assets/logo.svg" class="max-w-full my-8" alt="NsLookup logo" width="337" height="57">
+                <img src="assets/logo.svg" class="max-w-full my-8" alt="NsLookup logo" width="337" height="57" />
                 <!-- Content -->
                 <div class="relative my-4 h-12 max-w-full w-[500px]">
                     <div class="flex border border-gray-300 bg-white rounded-md h-full overflow-hidden shadow">
@@ -36,31 +36,68 @@
                         <label for="inputDomain" class="sr-only">Domain name</label>
                         <input class="w-full min-w-0 pl-11 outline-none" type="url" id="inputDomain"
                             placeholder="Domain name" autocomplete="off" autocorrect="off" autocapitalize="none"
-                            spellcheck="false">
+                            spellcheck="false" />
                         <!-- Button -->
                         <div class="grow-0 shrink-0">
-                            <button
+                            <button id="button"
                                 class="h-full align-middle px-4 whitespace-nowrap border-gray-300 border-l text-white bg-[#3a0161] hover:bg-[#23013c]"
-                                type="submit">Find DNS records
+                                type="submit">
+                                Find DNS records
                             </button>
                         </div>
                     </div>
                 </div>
                 <!-- Info Text -->
                 <p class="mt-8 mb-8 sm:mb-20 text-center max-w-full w-[500px] text-neutral-800">
-                    <span data-ccpa-link="1"> </span> Find all DNS records for a domain name using this online tool. For
-                    example, try <a href="/domains/wikipedia.org/dns-records/"
+                    <span data-ccpa-link="1"> </span> Find all DNS records
+                    for a domain name using this online tool. For example,
+                    try
+                    <a href="/domains/wikipedia.org/dns-records/"
                         class="text-blue-600 hover:text-blue-800 hover:underline"
-                        title="DNS records for wikipedia.org">wikipedia.org</a> or <a
-                        href="/domains/www.twitter.com/dns-records/"
+                        title="DNS records for wikipedia.org">wikipedia.org</a>
+                    or
+                    <a href="/domains/www.twitter.com/dns-records/"
                         class="text-blue-600 hover:text-blue-800 hover:underline"
-                        title="DNS records for www.twitter.com">www.twitter.com</a> to view their DNS records.
+                        title="DNS records for www.twitter.com">www.twitter.com</a>
+                    to view their DNS records.
                 </p>
+                <p id="timestamp" class="text-6xl"></p>
             </form>
         </header>
-
-
     </div>
+
+    <script>
+        // Initial fetch
+        $(async function () {
+            console.log(" ready!");
+            const mo = await logTimestamp();
+        });
+
+        // Set button listener const
+        const button = document.querySelector("#button");
+        const value = document.querySelector("#timestamp");
+
+        button.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            await logTimestamp();
+        });
+
+        // Methods
+        const logTimestamp = async (e) => {
+            if (e) {
+                console.log("e: ", e);
+                e.preventDefault();
+            }
+            const result = await fetch("/timestamp");
+            const timestamp = await result.text();
+            console.log("timestamp: ", timestamp);
+            value.textContent = timestamp;
+
+            return timestamp;
+        };
+
+    </script>
 </body>
 
 </html>
