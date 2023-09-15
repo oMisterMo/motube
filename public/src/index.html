@@ -19,7 +19,7 @@
         <header class="flex flex-col bg-neutral-100 px-3 min-h-screen">
             <form class="flex-grow flex flex-col items-center justify-center" autocomplete="off">
                 <!-- Logo -->
-                <img src="assets/logo.svg" class="max-w-full my-8" alt="NsLookup logo" width="337" height="57" />
+                <img src="assets/motube.png" class="max-w-full my-8" alt="NsLookup logo" width="337" height="57" />
                 <!-- Content -->
                 <div class="relative my-4 h-12 max-w-full w-[500px]">
                     <div class="flex border border-gray-300 bg-white rounded-md h-full overflow-hidden shadow">
@@ -34,36 +34,22 @@
                             </svg>
                         </div>
                         <!-- Input -->
-                        <label for="inputDomain" class="sr-only">Domain name</label>
-                        <input class="w-full min-w-0 pl-11 outline-none" type="url" id="inputDomain"
-                            placeholder="Domain name" autocomplete="off" autocorrect="off" autocapitalize="none"
+                        <label for="youtubeURL" class="sr-only">Youtube URL</label>
+                        <input class="w-full min-w-0 pl-11 outline-none" type="url" id="youtubeURL"
+                            placeholder="Youtube URL" autocomplete="off" autocorrect="off" autocapitalize="none"
                             spellcheck="false" />
                         <!-- Button -->
                         <div class="grow-0 shrink-0">
                             <button id="button"
-                                class="h-full align-middle px-4 whitespace-nowrap border-gray-300 border-l text-white bg-[#3a0161] hover:bg-[#23013c]"
+                                class="h-full align-middle px-4 whitespace-nowrap border-gray-300 border-l text-white bg-[#181818] hover:bg-[#313131]"
                                 type="submit">
-                                Find DNS records
+                                Search
                             </button>
                         </div>
                     </div>
                 </div>
-                <!-- Info Text -->
-                <p class="mt-8 mb-8 sm:mb-20 text-center max-w-full w-[500px] text-neutral-800">
-                    <span data-ccpa-link="1"> </span> Find all DNS records
-                    for a domain name using this online tool. For example,
-                    try
-                    <a href="/domains/wikipedia.org/dns-records/"
-                        class="text-blue-600 hover:text-blue-800 hover:underline"
-                        title="DNS records for wikipedia.org">wikipedia.org</a>
-                    or
-                    <a href="/domains/www.twitter.com/dns-records/"
-                        class="text-blue-600 hover:text-blue-800 hover:underline"
-                        title="DNS records for www.twitter.com">www.twitter.com</a>
-                    to view their DNS records.
-                </p>
                 <!-- Temp Timestamp -->
-                <p id="timestamp" class="text-6xl"></p>
+                <p id="timestamp" class="text-6xl my-8"></p>
             </form>
         </header>
     </div>
