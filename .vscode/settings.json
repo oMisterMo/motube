@@ -7,5 +7,10 @@
     "[javascript]": {
         "editor.formatOnSave": true
     },
-    "javascript.format.enable": false
+    "javascript.format.enable": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features",
+        "editor.formatOnSave": true
+    }
 }
