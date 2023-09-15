@@ -1,4 +1,4 @@
 // const server = require("./public/server/server");
-const { start } = require("./public/backend/server");
+const { start } = require("./backend/server");
 
 start();
