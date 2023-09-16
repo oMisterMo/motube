@@ -84,7 +84,11 @@
 
             const url = search.value;
             const a = document.createElement("a")
-            a.href = "/search?v=" + url;
+            if (url) {
+                a.href = "/search?v=" + url;
+            } else {
+                a.href = "/search";
+            }
             a.click();
 
         });
