@@ -18,24 +18,23 @@ const timestampGET = (req, res) => {
     res.type("json").send(file);
 };
 const timestampPOST = (req, res) => {
-    console.log(req.body);
     const data = req.body;
-    console.log(data.url);
 
     if (data.url) {
         try {
             fs.writeFileSync(filePath, JSON.stringify(data));
+            res.status(201).end();
         } catch (err) {
+            console.err(err);
             res.status(500).send("Error writing file.");
         }
     }
-    res.status(201).end();
 };
 
-router.use((req, res, next) => {
-    console.log("timestamp middleware");
-    next();
-});
+// router.use((req, res, next) => {
+//     console.log("timestamp middleware");
+//     next();
+// });
 router.get("/", timestampGET);
 router.post("/", timestampPOST);
 
