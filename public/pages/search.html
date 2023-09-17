@@ -15,10 +15,29 @@
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
             let player;
-            function onYouTubeIframeAPIReady() {
+
+            async function getVideoId() {
+                const data = await fetch("/timestamp");
+                const timestamp = await data.json();
+
+                if (timestamp) {
+                    const url = new URL(timestamp.url);
+                    const videoId = url.searchParams.get("v");
+                    console.log("url: ", url);
+                    console.log("v: ", videoId);
+                    if (videoId) {
+                        // correct search format
+                        return videoId;
+                    }
+                }
+                return "2Z4m4lnjxkY"; // trolol (something went wrong)
+            }
+
+            async function onYouTubeIframeAPIReady() {
+                const id = await getVideoId();
                 player = new YT.Player("player", {
                     height: "390",
-                    videoId: "udQ_XUJt34M",
+                    videoId: id,
                     playerVars: {
                         playsinline: 1,
                     },
