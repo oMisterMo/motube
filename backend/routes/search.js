@@ -5,10 +5,11 @@ const search = async (req, res) => {
     // Destructure search parameter
     const { v } = req.query;
 
-    if (!v) {
-        res.status(404).send("Video not found");
-        return;
-    }
+    // // Comment out for now, just load video when search is pressed.
+    // if (!v) {
+    //     res.status(404).send("Video not found");
+    //     return;
+    // }
 
     try {
         const file = await fs.readFile("public/pages/search.html");
