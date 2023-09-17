@@ -10,12 +10,12 @@ const search = document.querySelector("#search");
 const searchButton = document.querySelector("#searchConfirm");
 const value = document.querySelector("#timestamp");
 
-button.addEventListener("click", async (e) => {
+button.addEventListener("click", async e => {
     e.preventDefault();
 
     await logTimestamp();
 });
-searchButton.addEventListener("click", async (e) => {
+searchButton.addEventListener("click", async e => {
     e.preventDefault();
 
     const url = search.value;
@@ -29,7 +29,7 @@ searchButton.addEventListener("click", async (e) => {
 });
 
 // Methods
-const logTimestamp = async (e) => {
+const logTimestamp = async e => {
     if (e) {
         console.log("e: ", e);
         e.preventDefault();

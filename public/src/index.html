@@ -1,66 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Motube</title>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Motube</title>
+        <!-- <link href="main.css" rel="stylesheet" /> -->
+        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+        <link href="../dist/output.css" rel="stylesheet" />
 
-    <!-- <link href="main.css" rel="stylesheet" /> -->
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-    <link href="../dist/output.css" rel="stylesheet" />
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+        ></script>
+        <script src="app.js" defer></script>
+    </head>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="app.js" defer></script>
-</head>
-
-<body class="antialiased font-sans">
-    <div id="app" class="min-h-screen bg-cover bg-gray-100 flex flex-col" data-v-app="">
-        <header class="flex flex-col bg-neutral-100 px-3 min-h-screen">
-            <form class="flex-grow flex flex-col items-center justify-center" autocomplete="off">
-                <!-- Logo -->
-                <img src="assets/motube.png" class="max-w-full my-8" alt="NsLookup logo" width="337" height="57" />
-                <!-- Content -->
-                <div class="relative my-4 h-12 max-w-full w-[500px]">
-                    <div class="flex border border-gray-300 bg-white rounded-md h-full overflow-hidden shadow">
-                        <!-- Seach Icon -->
-                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                    clip-rule="evenodd">
-                                </path>
-                            </svg>
-                        </div>
-                        <!-- Input -->
-                        <label for="youtubeURL" class="sr-only">Youtube URL</label>
-                        <input id="search" class="w-full min-w-0 pl-11 outline-none" type="url" id="youtubeURL"
-                            placeholder="Youtube URL" autocomplete="off" autocorrect="off" autocapitalize="none"
-                            spellcheck="false" />
-                        <!-- Button -->
-                        <div class="grow-0 shrink-0">
-                            <button id="searchConfirm"
-                                class="h-full align-middle px-4 whitespace-nowrap border-gray-300 border-l text-white bg-[#181818] hover:bg-[#313131]"
-                                type="submit">
-                                Search
-                            </button>
+    <body class="font-sans antialiased">
+        <div id="app" class="flex min-h-screen flex-col bg-gray-100 bg-cover" data-v-app="">
+            <header class="flex min-h-screen flex-col bg-neutral-100 px-3">
+                <form class="flex flex-grow flex-col items-center justify-center" autocomplete="off">
+                    <!-- Logo -->
+                    <img src="assets/motube.png" class="my-8 max-w-full" alt="NsLookup logo" width="337" height="57" />
+                    <!-- Content -->
+                    <div class="relative my-4 h-12 w-[500px] max-w-full">
+                        <div class="flex h-full overflow-hidden rounded-md border border-gray-300 bg-white shadow">
+                            <!-- Seach Icon -->
+                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                <svg
+                                    class="h-5 w-5 text-gray-400"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <!-- Input -->
+                            <label for="youtubeURL" class="sr-only">Youtube URL</label>
+                            <input
+                                id="search"
+                                class="w-full min-w-0 pl-11 outline-none"
+                                type="url"
+                                id="youtubeURL"
+                                placeholder="Youtube URL"
+                                autocomplete="off"
+                                autocorrect="off"
+                                autocapitalize="none"
+                                spellcheck="false"
+                            />
+                            <!-- Button -->
+                            <div class="shrink-0 grow-0">
+                                <button
+                                    id="searchConfirm"
+                                    class="h-full whitespace-nowrap border-l border-gray-300 bg-[#181818] px-4 align-middle text-white hover:bg-[#313131]"
+                                    type="submit"
+                                >
+                                    Search
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Temp Timestamp -->
-                <p id="timestamp" class="text-6xl my-8"></p>
-                <div class="grow-0 shrink-0">
-                    <button id="increment"
-                        class="rounded-md h-full align-middle px-4 whitespace-nowrap border-gray-300 border-l text-white bg-[#181818] hover:bg-[#313131]"
-                        type="submit">
-                        add
-                    </button>
-                </div>
-            </form>
-        </header>
-    </div>
-</body>
-
+                    <!-- Temp Timestamp -->
+                    <p id="timestamp" class="my-8 text-6xl"></p>
+                    <div class="shrink-0 grow-0">
+                        <button
+                            id="increment"
+                            class="h-full whitespace-nowrap rounded-md border-l border-gray-300 bg-[#181818] px-4 align-middle text-white hover:bg-[#313131]"
+                            type="submit"
+                        >
+                            add
+                        </button>
+                    </div>
+                </form>
+            </header>
+        </div>
+    </body>
 </html>
