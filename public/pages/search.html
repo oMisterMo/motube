@@ -52,10 +52,25 @@
             function onPlayerReady(event) {
                 event.target.playVideo();
             }
-            function onPlayerStateChange(event) {
+            async function onPlayerStateChange(event) {
                 if (event.data == YT.PlayerState.PLAYING && !done) {
                     setTimeout(stopVideo, 6000);
                     done = true;
+                }
+                if (event.data == YT.PlayerState.PAUSED) {
+                    const data = {
+                        timestamp: player.getCurrentTime(),
+                        modified_at: Date.now(),
+                    };
+                    await fetch("/timestamp", {
+                        method: "PUT",
+                        headers: {
+                            Accept: "application/json",
+                            "Access-Control-Allow-Headers": "application/json",
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    });
                 }
             }
 
