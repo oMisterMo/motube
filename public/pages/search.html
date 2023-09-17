@@ -16,15 +16,17 @@
 
             let player;
 
-            async function getVideoId() {
+            async function getData() {
                 const data = await fetch("/timestamp");
                 const timestamp = await data.json();
 
-                if (timestamp) {
-                    const url = new URL(timestamp.url);
+                return timestamp;
+            }
+
+            function getVideoId(fullURL) {
+                if (fullURL) {
+                    const url = new URL(fullURL);
                     const videoId = url.searchParams.get("v");
-                    console.log("url: ", url);
-                    console.log("v: ", videoId);
                     if (videoId) {
                         // correct search format
                         return videoId;
@@ -34,10 +36,13 @@
             }
 
             async function onYouTubeIframeAPIReady() {
-                const id = await getVideoId();
+                const data = await getData();
+                const { url, timestamp } = data;
+                const videoId = getVideoId(url);
+
                 player = new YT.Player("player", {
                     height: "390",
-                    videoId: id,
+                    videoId,
                     playerVars: {
                         playsinline: 1,
                     },
@@ -49,15 +54,23 @@
             }
 
             let done = false;
-            function onPlayerReady(event) {
+            async function onPlayerReady(event) {
+                const { timestamp } = await getData();
+                if (timestamp) {
+                    player.seekTo(timestamp);
+                }
                 event.target.playVideo();
             }
             async function onPlayerStateChange(event) {
                 if (event.data == YT.PlayerState.PLAYING && !done) {
-                    setTimeout(stopVideo, 6000);
+                    // setTimeout(stopVideo, 6000);
                     done = true;
                 }
+                if (event.data == YT.PlayerState.PLAYING) {
+                    console.log("playing...");
+                }
                 if (event.data == YT.PlayerState.PAUSED) {
+                    console.log("paused...");
                     const data = {
                         timestamp: player.getCurrentTime(),
                         modified_at: Date.now(),
@@ -71,6 +84,9 @@
                         },
                         body: JSON.stringify(data),
                     });
+                }
+                if (event.data == YT.PlayerState.CUED) {
+                    console.log("cued...");
                 }
             }
 
