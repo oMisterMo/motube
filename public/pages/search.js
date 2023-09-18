@@ -1,38 +1,14 @@
-// Loads YT api
-// e.g. <script src="https://www.youtube.com/iframe_api"> <script>
-const tag = document.createElement("script");
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName("script")[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+injectYoutubeAPI();
 
+let done = false; // Do not really need...!
 let player;
 const WAIT_SECS = 5 * 1000;
-
-async function getData() {
-    const data = await fetch("/timestamp");
-    const timestamp = await data.json();
-
-    return timestamp;
-}
-
-function getVideoId(fullURL) {
-    if (fullURL) {
-        const url = new URL(fullURL);
-        console.log(url);
-        const videoId = url.searchParams.get("v");
-        if (videoId) {
-            // correct search format
-            return videoId;
-        }
-    }
-    return "2Z4m4lnjxkY"; // trolol (something went wrong)
-}
 
 async function onYouTubeIframeAPIReady() {
     const data = await getData();
     const { url, timestamp } = data;
     const videoId = getVideoId(url);
-    const domain = "http://localhost";
+    const domain = "http://localhost:3000/";
     // const domain = "127.0.0.1";
 
     player = new YT.Player("player", {
@@ -41,9 +17,9 @@ async function onYouTubeIframeAPIReady() {
         playerVars: {
             start: timestamp,
             // playsinline: 1,
-            // enablejsapi: 1,
-            // origin: domain,
-            // widget_referrer: domain,
+            enablejsapi: 1,
+            origin: domain,
+            widget_referrer: domain,
         },
         events: {
             onReady: onPlayerReady,
@@ -73,7 +49,15 @@ async function onYouTubeIframeAPIReady() {
     });
 }
 
-let done = false;
+/* Youtube */
+function injectYoutubeAPI() {
+    // Loads YT api
+    // e.g. <script src="https://www.youtube.com/iframe_api"> <script>
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
 async function onPlayerReady(event) {
     // const { timestamp } = await getData();
     // if (timestamp) {
@@ -114,4 +98,25 @@ async function onPlayerError(event) {
 }
 function stopVideo() {
     player.stopVideo();
+}
+
+/* Methods */
+async function getData() {
+    const data = await fetch("/timestamp");
+    const timestamp = await data.json();
+
+    return timestamp;
+}
+
+function getVideoId(fullURL) {
+    if (fullURL) {
+        const url = new URL(fullURL);
+        console.log(url);
+        const videoId = url.searchParams.get("v");
+        if (videoId) {
+            // correct search format
+            return videoId;
+        }
+    }
+    return "2Z4m4lnjxkY"; // trolol (something went wrong)
 }
