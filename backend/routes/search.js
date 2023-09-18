@@ -12,7 +12,7 @@ const search = async (req, res) => {
     // }
 
     try {
-        const file = await fs.readFile("public/pages/search.html");
+        const file = await fs.readFile("public/views/search.html");
         res.status(200).type("html").send(file);
     } catch (err) {
         console.error(err);
