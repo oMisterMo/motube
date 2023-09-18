@@ -2,11 +2,11 @@
     "name": "motube",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
-        "start": "node index.js",
+        "start": "node app.js",
         "tailwind": "npx tailwindcss -i ./public/src/main.css -o ./public/dist/output.css --watch",
-        "dev": "nodemon index.js",
+        "dev": "nodemon app.js",
         "test": "jest"
     },
     "keywords": [],
