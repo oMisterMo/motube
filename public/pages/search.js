@@ -32,6 +32,8 @@ async function onYouTubeIframeAPIReady() {
     const data = await getData();
     const { url, timestamp } = data;
     const videoId = getVideoId(url);
+    const domain = "http://localhost";
+    // const domain = "127.0.0.1";
 
     player = new YT.Player("player", {
         height: "390",
@@ -39,6 +41,9 @@ async function onYouTubeIframeAPIReady() {
         playerVars: {
             start: timestamp,
             // playsinline: 1,
+            // enablejsapi: 1,
+            // origin: domain,
+            // widget_referrer: domain,
         },
         events: {
             onReady: onPlayerReady,

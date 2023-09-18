@@ -14,7 +14,7 @@ let seconds = 0;
 const filePath = path.resolve(__dirname, "../video.json");
 
 const timestampGET = (req, res) => {
-    const file = fs.readFileSync(filePath);
+    const file = fs.readFileSync(filePath, "utf-8");
     res.type("json").send(file);
 };
 const timestampPOST = (req, res) => {
