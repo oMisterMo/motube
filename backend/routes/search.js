@@ -1,23 +1,22 @@
-const fs = require("fs").promises;
-// const fs = require("fs/promises") // Same thing
+const fs = require("fs");
+const path = require("path");
+const express = require("express");
+const router = express.Router();
 
-const search = async (req, res) => {
+const filePath = fs.readFileSync("public/views/search.html");
+
+const searchGET = async (req, res) => {
     // Destructure search parameter
     const { v } = req.query;
 
-    // // Comment out for now, just load video when search is pressed.
-    // if (!v) {
-    //     res.status(404).send("Video not found");
-    //     return;
-    // }
-
     try {
-        const file = await fs.readFile("public/views/search.html");
-        res.status(200).type("html").send(file);
+        res.status(200).type("html").send(filePath);
     } catch (err) {
         console.error(err);
         res.status(404).send("File not found");
     }
 };
 
-module.exports = search;
+router.get("/", searchGET);
+
+module.exports = router;
