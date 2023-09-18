@@ -75,22 +75,15 @@ async function onPlayerStateChange(event) {
     }
     if (event.data == YT.PlayerState.PAUSED) {
         console.log("paused...");
-        const data = {
-            timestamp: Math.floor(player.getCurrentTime()),
-            modified_at: Date.now(),
-        };
-        await fetch("/timestamp", {
-            method: "PUT",
-            headers: {
-                Accept: "application/json",
-                "Access-Control-Allow-Headers": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
+        putData();
     }
     if (event.data == YT.PlayerState.CUED) {
         console.log("cued...");
+    }
+    if (event.data == YT.PlayerState.ENDED) {
+        console.log("ended...");
+        // interval === end time here
+        putData();
     }
 }
 async function onPlayerError(event) {
@@ -106,6 +99,22 @@ async function getData() {
     const timestamp = await data.json();
 
     return timestamp;
+}
+
+async function putData() {
+    const data = {
+        timestamp: Math.floor(player.getCurrentTime()),
+        modified_at: Date.now(),
+    };
+    await fetch("/timestamp", {
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            "Access-Control-Allow-Headers": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
 }
 
 function getVideoId(fullURL) {
