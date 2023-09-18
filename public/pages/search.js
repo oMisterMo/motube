@@ -18,6 +18,7 @@ async function getData() {
 function getVideoId(fullURL) {
     if (fullURL) {
         const url = new URL(fullURL);
+        console.log(url);
         const videoId = url.searchParams.get("v");
         if (videoId) {
             // correct search format
@@ -36,7 +37,8 @@ async function onYouTubeIframeAPIReady() {
         height: "390",
         videoId,
         playerVars: {
-            playsinline: 1,
+            start: timestamp,
+            // playsinline: 1,
         },
         events: {
             onReady: onPlayerReady,
@@ -68,10 +70,10 @@ async function onYouTubeIframeAPIReady() {
 
 let done = false;
 async function onPlayerReady(event) {
-    const { timestamp } = await getData();
-    if (timestamp) {
-        player.seekTo(timestamp);
-    }
+    // const { timestamp } = await getData();
+    // if (timestamp) {
+    //     player.seekTo(timestamp);
+    // }
     event.target.playVideo();
 }
 async function onPlayerStateChange(event) {
@@ -85,7 +87,7 @@ async function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PAUSED) {
         console.log("paused...");
         const data = {
-            timestamp: player.getCurrentTime(),
+            timestamp: Math.floor(player.getCurrentTime()),
             modified_at: Date.now(),
         };
         await fetch("/timestamp", {
