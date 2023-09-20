@@ -2,24 +2,28 @@ injectYoutubeAPI();
 
 let done = false; // Do not really need...!
 let player;
-const WAIT_SECS = 5 * 1000;
+const WAIT_SECS = 2 * 1000;
 
 async function onYouTubeIframeAPIReady() {
     const data = await getData();
-    const { url, timestamp } = data;
+    const { url, timestamp, playing } = data;
     const videoId = getVideoId(url);
-    const domain = "http://localhost:3000/";
+    const domain = "http://localhost:3000";
     // const domain = "127.0.0.1";
 
     player = new YT.Player("player", {
         height: "390",
         videoId,
+        // Query params
         playerVars: {
             start: timestamp,
+            autoplay: playing ?? 1,
+            mute: playing ?? 1,
             // playsinline: 1,
-            enablejsapi: 1,
-            origin: domain,
-            widget_referrer: domain,
+            // enablejsapi: 1, (injected automatically)
+            // origin: domain, (injected automatically)
+            // widgetid: 1 (injected automatically)
+            // widget_referrer: domain,
         },
         events: {
             onReady: onPlayerReady,
@@ -32,19 +36,20 @@ async function onYouTubeIframeAPIReady() {
     let interval = null;
 
     player.addEventListener("onStateChange", event => {
-        if (event.data == YT.PlayerState.PAUSED) {
+        // PLAYING
+        if (event.data == YT.PlayerState.PLAYING) {
             interval = setInterval(async () => {
-                const data = await getData();
-                const { timestamp } = data;
-                if (timestamp !== previous) {
-                    player.seekTo(timestamp);
-                    console.log("seek to ", timestamp);
-                }
-                previous = timestamp;
+                putData(true);
             }, WAIT_SECS);
         }
-        if (event.data == YT.PlayerState.PLAYING) {
+        // PAUSED or ENDED
+        if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
             clearInterval(interval);
+        }
+    });
+    player.addEventListener("onReady", () => {
+        if (playing) {
+            player.playVideo();
         }
     });
 }
@@ -59,10 +64,6 @@ function injectYoutubeAPI() {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 async function onPlayerReady(event) {
-    // const { timestamp } = await getData();
-    // if (timestamp) {
-    //     player.seekTo(timestamp);
-    // }
     event.target.playVideo();
 }
 async function onPlayerStateChange(event) {
@@ -72,6 +73,7 @@ async function onPlayerStateChange(event) {
     }
     if (event.data == YT.PlayerState.PLAYING) {
         console.log("playing...");
+        putData(true);
     }
     if (event.data == YT.PlayerState.PAUSED) {
         console.log("paused...");
@@ -101,10 +103,11 @@ async function getData() {
     return timestamp;
 }
 
-async function putData() {
+async function putData(isPlaying = false) {
     const data = {
         timestamp: Math.floor(player.getCurrentTime()),
         modified_at: Date.now(),
+        playing: isPlaying,
     };
     await fetch("/timestamp", {
         method: "PUT",
