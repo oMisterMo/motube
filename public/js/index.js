@@ -12,7 +12,7 @@ $(async function () {
 
         return timestamp;
     };
-    const postData = async () => {
+    const postData = async url => {
         // Update server file storing details of request
         const data = {
             url,
@@ -46,7 +46,7 @@ $(async function () {
         // Go to search page
         const a = document.createElement("a");
         if (url) {
-            postData();
+            await postData(url);
             a.href = "/search?v=" + url;
         } else {
             // Just navigate to search page using current video

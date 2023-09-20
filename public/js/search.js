@@ -6,9 +6,13 @@ const WAIT_SECS = 2 * 1000;
 
 async function onYouTubeIframeAPIReady() {
     const data = await getData();
-    const { url, timestamp, playing } = data;
+    const { url, timestamp, playing, created_at, modified_at } = data;
     const videoId = getVideoId(url);
     const domain = "http://localhost:3000";
+    const createdEl = document.querySelector("#created_at");
+    const modifiedEl = document.querySelector("#modified_at");
+    createdEl?.textContent = new Date(created_at).toUTCString();
+    modifiedEl?.textContent = new Date(modified_at).toUTCString();
     // const domain = "127.0.0.1";
 
     player = new YT.Player("player", {

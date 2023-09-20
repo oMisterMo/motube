@@ -9,8 +9,34 @@
         <script src="../js/search.js" defer></script>
     </head>
     <body>
-        <div class="m-auto max-w-[640px]">
-            <div id="player" class="flex w-full"></div>
+        <div class="h-screen w-screen">
+            <div class="m-auto max-w-[640px] rounded-lg border border-white p-4 shadow-2xl">
+                <div id="player" class="flex w-full"></div>
+                <div class="my-8">
+                    <table class="w-full text-left text-gray-500 dark:text-gray-400">
+                        <thead
+                            class="bg-gray-50 uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+                        >
+                            <tr>
+                                <th>Data</th>
+                                <th>Tme</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Created</td>
+                                <td id="created_at"></td>
+                            </tr>
+                            <tr>
+                                <td>Modified</td>
+                                <td id="modified_at"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <p id="created_at" class="font-mono">Created: Jan 20th 2024</p>
+                    <p id="modified_at" class="font-mono">Modified: Jan 20th 2024</p> -->
+                </div>
+            </div>
         </div>
     </body>
 </html>
