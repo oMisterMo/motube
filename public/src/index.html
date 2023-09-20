@@ -22,7 +22,12 @@
             <header class="flex min-h-screen flex-col bg-neutral-100 px-3">
                 <form class="flex flex-grow flex-col items-center justify-center" autocomplete="off">
                     <!-- Logo -->
-                    <img src="assets/motube.png" class="my-8 max-w-full" alt="Motube" width="337" height="57" />
+                    <div class="relative my-8 max-w-full">
+                        <img src="assets/motube.png" alt="Motube" width="337" height="57" />
+                        <span id="live-tag" class="absolute right-0 top-0 hidden -translate-x-1/4 -translate-y-full">
+                            <label class="rounded-lg border border-red-600 px-2 font-mono text-red-600">LIVE</label>
+                        </span>
+                    </div>
                     <!-- Content -->
                     <div class="relative my-4 h-12 w-[500px] max-w-full">
                         <div class="flex h-full overflow-hidden rounded-md border border-gray-300 bg-white shadow">

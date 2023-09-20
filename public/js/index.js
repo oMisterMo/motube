@@ -6,10 +6,36 @@ $(async function () {
     const search = document.querySelector("#search");
     const searchButton = document.querySelector("#searchConfirm");
     const value = document.querySelector("#timestamp");
+    const getData = async () => {
+        const data = await fetch("/timestamp");
+        const timestamp = await data.json();
 
-    // const timestamp = await fetch("/timestamp");
-    // const timestampJSON = await timestamp.json();
-    // console.log(timestampJSON);
+        return timestamp;
+    };
+    const postData = async () => {
+        // Update server file storing details of request
+        const data = {
+            url,
+            timestamp: 0,
+            created_at: Date.now(),
+            modified_at: Date.now(),
+        };
+        await fetch("/timestamp", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Access-Control-Allow-Headers": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+    };
+
+    const { playing } = await getData();
+    const liveTag = document.querySelector("#live-tag");
+    if (playing) {
+        liveTag.classList.remove("hidden");
+    }
 
     searchButton.addEventListener("click", async e => {
         e.preventDefault();
@@ -20,23 +46,7 @@ $(async function () {
         // Go to search page
         const a = document.createElement("a");
         if (url) {
-            // Update server file storing details of request
-            const data = {
-                url,
-                timestamp: 0,
-                created_at: Date.now(),
-                modified_at: Date.now(),
-            };
-            await fetch("/timestamp", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Access-Control-Allow-Headers": "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-
+            postData();
             a.href = "/search?v=" + url;
         } else {
             // Just navigate to search page using current video
