@@ -9,14 +9,7 @@ async function onYouTubeIframeAPIReady() {
     const { url, timestamp, playing, created_at, modified_at } = data;
     const videoId = getVideoId(url);
     const domain = "http://localhost:3000";
-    const createdEl = document.querySelector("#created_at");
-    const modifiedEl = document.querySelector("#modified_at");
-    if (createdEl) {
-        createdEl.textContent = new Date(created_at).toUTCString();
-    }
-    if (modifiedEl) {
-        modifiedEl.textContent = new Date(modified_at).toUTCString();
-    }
+    updateTimestamps(created_at, modified_at);
     // const domain = "127.0.0.1";
 
     player = new YT.Player("player", {
@@ -117,11 +110,15 @@ async function getData() {
 }
 
 async function putData(isPlaying = false) {
+    const modified_at = Date.now();
     const data = {
         timestamp: Math.floor(player.getCurrentTime()),
-        modified_at: Date.now(),
+        modified_at,
         playing: isPlaying,
     };
+
+    updateModifiedAt(modified_at);
+
     await fetch("/timestamp", {
         method: "PUT",
         headers: {
@@ -144,4 +141,23 @@ function getVideoId(fullURL) {
         }
     }
     return "2Z4m4lnjxkY"; // trolol (something went wrong)
+}
+
+function updateTimestamps(created_at, modified_at) {
+    updateCreatedAt(created_at);
+    updateModifiedAt(modified_at);
+}
+
+function updateCreatedAt(created_at) {
+    const createdEl = document.querySelector("#created_at");
+    if (createdEl) {
+        createdEl.textContent = new Date(created_at).toUTCString();
+    }
+}
+
+function updateModifiedAt(modified_at) {
+    const modifiedEl = document.querySelector("#modified_at");
+    if (modifiedEl) {
+        modifiedEl.textContent = new Date(modified_at).toUTCString();
+    }
 }
