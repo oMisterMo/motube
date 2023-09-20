@@ -34,6 +34,7 @@ async function onYouTubeIframeAPIReady() {
 
     let previous = null;
     let interval = null;
+    const intervals = [];
 
     player.addEventListener("onStateChange", event => {
         // PLAYING
@@ -41,10 +42,14 @@ async function onYouTubeIframeAPIReady() {
             interval = setInterval(async () => {
                 putData(true);
             }, WAIT_SECS);
+            intervals.push(interval);
         }
         // PAUSED or ENDED
         if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-            clearInterval(interval);
+            // clearInterval(interval);
+            while (intervals.length) {
+                clearInterval(intervals.pop());
+            }
         }
     });
     player.addEventListener("onReady", () => {
