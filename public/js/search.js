@@ -11,8 +11,12 @@ async function onYouTubeIframeAPIReady() {
     const domain = "http://localhost:3000";
     const createdEl = document.querySelector("#created_at");
     const modifiedEl = document.querySelector("#modified_at");
-    createdEl?.textContent = new Date(created_at).toUTCString();
-    modifiedEl?.textContent = new Date(modified_at).toUTCString();
+    if (createdEl) {
+        createdEl.textContent = new Date(created_at).toUTCString();
+    }
+    if (modifiedEl) {
+        modifiedEl.textContent = new Date(modified_at).toUTCString();
+    }
     // const domain = "127.0.0.1";
 
     player = new YT.Player("player", {
