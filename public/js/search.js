@@ -5,13 +5,19 @@ let player;
 const WAIT_SECS = 2 * 1000;
 const intervals = [];
 const back = document.querySelector("#back");
-console.log(back);
 back.addEventListener("click", async () => {
     clearAllIntervals();
     player.stopVideo();
     await putData(); // set playing false, update time
     window.location.href = "/";
 });
+
+console.log("isMobile: ", detectMob());
+if (detectMob()) {
+    back.classList.add("bottom-2");
+} else {
+    back.classList.add("top-2");
+}
 
 async function onYouTubeIframeAPIReady() {
     const data = await getData();
@@ -172,4 +178,20 @@ function clearAllIntervals() {
     while (intervals.length) {
         clearInterval(intervals.pop());
     }
+}
+
+function detectMob() {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i,
+    ];
+
+    return toMatch.some(toMatchItem => {
+        return navigator.userAgent.match(toMatchItem);
+    });
 }

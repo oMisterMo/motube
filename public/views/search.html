@@ -7,11 +7,25 @@
         <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
         <link href="../dist/output.css" rel="stylesheet" />
         <script src="../js/search.js" defer></script>
+        <script>
+            // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+
+            // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+            let vh = window.innerHeight * 0.01;
+            // Then we set the value in the --vh custom property to the root of the document
+            document.documentElement.style.setProperty("--vh", `${vh}px`);
+        </script>
+        <style>
+            #main {
+                height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+                height: calc(var(--vh, 1vh) * 100);
+            }
+        </style>
     </head>
     <body>
-        <div class="h-screen w-screen">
+        <div id="main" class="relative h-screen w-screen">
             <!-- Back button -->
-            <button id="back" class="absolute left-2 top-2">
+            <button id="back" class="absolute left-2">
                 <img class="h-12 w-12" src="assets/back.svg" />
             </button>
             <div class="m-auto max-w-[640px] rounded-lg border border-white p-4 shadow-2xl">
