@@ -3,6 +3,15 @@ injectYoutubeAPI();
 let done = false; // Do not really need...!
 let player;
 const WAIT_SECS = 2 * 1000;
+const intervals = [];
+const back = document.querySelector("#back");
+console.log(back);
+back.addEventListener("click", async () => {
+    clearAllIntervals();
+    player.stopVideo();
+    await putData(); // set playing false, update time
+    window.location.href = "/";
+});
 
 async function onYouTubeIframeAPIReady() {
     const data = await getData();
@@ -33,24 +42,14 @@ async function onYouTubeIframeAPIReady() {
         },
     });
 
-    let previous = null;
-    let interval = null;
-    const intervals = [];
-
     player.addEventListener("onStateChange", event => {
         // PLAYING
         if (event.data == YT.PlayerState.PLAYING) {
-            interval = setInterval(async () => {
-                putData(true);
-            }, WAIT_SECS);
-            intervals.push(interval);
+            addInterval();
         }
         // PAUSED or ENDED
         if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-            // clearInterval(interval);
-            while (intervals.length) {
-                clearInterval(intervals.pop());
-            }
+            clearAllIntervals();
         }
     });
     player.addEventListener("onReady", () => {
@@ -79,11 +78,11 @@ async function onPlayerStateChange(event) {
     }
     if (event.data == YT.PlayerState.PLAYING) {
         console.log("playing...");
-        putData(true);
+        await putData(true);
     }
     if (event.data == YT.PlayerState.PAUSED) {
         console.log("paused...");
-        putData();
+        await putData();
     }
     if (event.data == YT.PlayerState.CUED) {
         console.log("cued...");
@@ -91,7 +90,7 @@ async function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
         console.log("ended...");
         // interval === end time here
-        putData();
+        await putData();
     }
 }
 async function onPlayerError(event) {
@@ -159,5 +158,18 @@ function updateModifiedAt(modified_at) {
     const modifiedEl = document.querySelector("#modified_at");
     if (modifiedEl) {
         modifiedEl.textContent = new Date(modified_at).toUTCString();
+    }
+}
+
+async function addInterval() {
+    const interval = setInterval(async () => {
+        await putData(true);
+    }, WAIT_SECS);
+    intervals.push(interval);
+}
+
+function clearAllIntervals() {
+    while (intervals.length) {
+        clearInterval(intervals.pop());
     }
 }
