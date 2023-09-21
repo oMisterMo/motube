@@ -5,3 +5,12 @@
 h1 {
     background-color: blueviolet;
 }
+
+svg {
+    width: 1em;
+    height: 1em;
+}
+
+img[src*=".svg"] {
+    width: 100%;
+}
