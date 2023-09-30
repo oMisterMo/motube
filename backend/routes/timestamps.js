@@ -22,8 +22,8 @@ const timestampPOST = (req, res) => {
 
     if (videoJSON) {
         // Get
-        const timestamps = fs.readFileSync(filePath, "utf-8");
-        const timestampsJSON = JSON.parse(timestamps);
+        const timestampsSTRING = fs.readFileSync(filePath, "utf-8");
+        const timestampsJSON = JSON.parse(timestampsSTRING);
 
         // Modify
         /* Before I push, I should make sure the video doesn't already exist */
