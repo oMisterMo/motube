@@ -20,7 +20,17 @@ $(async function () {
             created_at: Date.now(),
             modified_at: Date.now(),
         };
+        // Not going to need this once I've got /timestamps working properly
         await fetch("/timestamp", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Access-Control-Allow-Headers": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        await fetch("/timestamps", {
             method: "POST",
             headers: {
                 Accept: "application/json",

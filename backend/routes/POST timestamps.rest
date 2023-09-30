@@ -1,0 +1,5 @@
+
+POST http://localhost:3000/timestamps
+Content-Type: application/json
+
+{"url": "www.hello.com", "timestamp": 0} 
