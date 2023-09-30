@@ -23,12 +23,13 @@ const timestampPOST = (req, res) => {
     if (data.url) {
         try {
             fs.writeFileSync(filePath, JSON.stringify(data));
-            res.status(201).end();
+            return res.status(201).end();
         } catch (err) {
             console.err(err);
-            res.status(500).send("Error writing file.");
+            return res.status(500).send("Error writing file.");
         }
     }
+    res.status(500).send("No url found.");
 };
 const timestampPUT = (req, res) => {
     const data = req.body;
@@ -37,16 +38,15 @@ const timestampPUT = (req, res) => {
     if (data.timestamp) {
         const file = fs.readFileSync(filePath, "utf-8");
         const updatedData = Object.assign(JSON.parse(file), data);
-        // console.log("file is: ", file);
-        // console.log("updated file: ", updatedData);
         try {
             fs.writeFileSync(filePath, JSON.stringify(updatedData));
-            res.status(201).end();
+            return res.status(201).end();
         } catch (err) {
             console.err(err);
-            res.status(500).send("Error writing file.");
+            return res.status(500).send("Error writing file.");
         }
     }
+    res.status(500).send("No timestamp found.");
 };
 
 // router.use((req, res, next) => {
