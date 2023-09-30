@@ -12,8 +12,8 @@ back.addEventListener("click", async () => {
     window.location.href = "/";
 });
 
-console.log("isMobile: ", detectMob());
-if (detectMob()) {
+console.log("isMobile: ", isMobile());
+if (isMobile()) {
     back.classList.add("bottom-2");
 } else {
     back.classList.add("top-2");
@@ -180,7 +180,7 @@ function clearAllIntervals() {
     }
 }
 
-function detectMob() {
+function isMobile() {
     const toMatch = [
         /Android/i,
         /webOS/i,
