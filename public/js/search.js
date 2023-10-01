@@ -2,7 +2,7 @@ injectYoutubeAPI();
 
 let done = false; // Do not really need...!
 let player;
-const WAIT_SECS = 2 * 1000;
+const WAIT_MS = 500; // Youtube player plays videos in seconds, send interval 2 times a second
 const intervals = [];
 const back = document.querySelector("#back");
 back.addEventListener("click", async () => {
@@ -170,7 +170,7 @@ function updateModifiedAt(modified_at) {
 async function addInterval() {
     const interval = setInterval(async () => {
         await putData(true);
-    }, WAIT_SECS);
+    }, WAIT_MS);
     intervals.push(interval);
 }
 
