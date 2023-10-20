@@ -15,6 +15,7 @@ $(async function () {
     const postData = async url => {
         // Update server file storing details of request
         const data = {
+            id: new URL(url).searchParams.get("v"),
             url,
             timestamp: 0,
             created_at: Date.now(),
@@ -56,8 +57,19 @@ $(async function () {
         // Go to search page
         const a = document.createElement("a");
         if (url) {
-            await postData(url);
-            a.href = "/search?v=" + url;
+            // Convert to URL to test if valid
+            try {
+                const youtubeURL = new URL(url);
+                if (youtubeURL.searchParams.get("v")) {
+                    await postData(url);
+                    a.href = "/search?v=" + url;
+                } else {
+                    console.error("Not youtube video...");
+                    return;
+                }
+            } catch (e) {
+                console.error("Not a valid link...");
+            }
         } else {
             // Just navigate to search page using current video
             a.href = "/search";

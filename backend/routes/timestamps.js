@@ -19,6 +19,7 @@ const timestampGET = (req, res) => {
 };
 const timestampPOST = (req, res) => {
     const videoJSON = req.body;
+    console.log("video is: ", videoJSON);
 
     if (videoJSON) {
         // Get
@@ -26,37 +27,62 @@ const timestampPOST = (req, res) => {
         const timestampsJSON = JSON.parse(timestampsSTRING);
 
         // Modify
-        /* Before I push, I should make sure the video doesn't already exist */
-        timestampsJSON.push(videoJSON);
+        const foundIndex = timestampsJSON.findIndex(timestamp => timestamp.id === videoJSON.id);
+        console.log("found undex: ", foundIndex);
 
-        // Save
-        try {
-            fs.writeFileSync(filePath, JSON.stringify(timestampsJSON));
-            console.log("Successfully added new video!");
-            return res.status(201).end();
-        } catch (err) {
-            console.err(err);
-            return res.status(500).send("Error writing file.");
+        if (foundIndex >= 0) {
+            console.log("Mo is RETURNING to an old video :D");
+            return res.status(200).end();
+        } else {
+            timestampsJSON.push(videoJSON);
+
+            // Save
+            try {
+                fs.writeFileSync(filePath, JSON.stringify(timestampsJSON));
+                console.log("Successfully added new video!");
+                return res.status(201).end();
+            } catch (err) {
+                console.err(err);
+                return res.status(500).send("Error writing file.");
+            }
         }
     }
     return res.status(500).send("No url found.");
 };
 const timestampPUT = (req, res) => {
-    const data = req.body;
-    console.log(data);
+    const videoJSON = req.body;
 
-    if (data.timestamp) {
-        const file = fs.readFileSync(filePath, "utf-8");
-        const updatedData = Object.assign(JSON.parse(file), data);
-        try {
-            fs.writeFileSync(filePath, JSON.stringify(updatedData));
-            return res.status(201).end();
-        } catch (err) {
-            console.err(err);
-            return res.status(500).send("Error writing file.");
+    // console.log("video to update: ", videoJSON);
+
+    if (videoJSON) {
+        // Get
+        const timestampsSTRING = fs.readFileSync(filePath, "utf-8");
+        const timestampsJSON = JSON.parse(timestampsSTRING);
+
+        // Modify
+        // console.log("LENGTH ", timestampsJSON.length);
+        const foundIndex = timestampsJSON.findIndex(timestamp => timestamp.id === videoJSON.id);
+
+        if (foundIndex >= 0) {
+            // Mutate original array
+
+            // timestampsJSON[foundIndex].id = videoJSON.id;
+            timestampsJSON[foundIndex].modified_at = videoJSON.modified_at;
+            timestampsJSON[foundIndex].timestamp = videoJSON.timestamp;
+            timestampsJSON[foundIndex].playing = videoJSON.playing;
+            timestampsJSON[foundIndex].title = videoJSON.title;
+
+            // Save
+            try {
+                fs.writeFileSync(filePath, JSON.stringify(timestampsJSON));
+                return res.status(201).end();
+            } catch (err) {
+                console.err(err);
+                return res.status(500).send("Error writing file.");
+            }
         }
     }
-    res.status(500).send("No timestamp found.");
+    return res.status(500).send("No url found.");
 };
 
 // router.use((req, res, next) => {

@@ -5,11 +5,16 @@ let player;
 const WAIT_MS = 500; // Youtube player plays videos in seconds, send interval 2 times a second
 const intervals = [];
 const back = document.querySelector("#back");
+const mo = document.querySelector("#mo");
 back.addEventListener("click", async () => {
     clearAllIntervals();
     player.stopVideo();
     await putData(); // set playing false, update time
     window.location.href = "/";
+});
+mo.addEventListener("click", async () => {
+    const data = await fetch("/timestamps");
+    console.log(await data.json());
 });
 
 console.log("isMobile: ", isMobile());
@@ -115,8 +120,15 @@ async function getData() {
 }
 
 async function putData(isPlaying = false) {
+    // CALLED 2 times a seconds, optimize here!
+
+    const videoURL = player.getVideoUrl();
+    const url = new URL(videoURL);
     const modified_at = Date.now();
     const data = {
+        // url: videoURL,
+        id: url.searchParams.get("v"),
+        title: player.videoTitle,
         timestamp: Math.floor(player.getCurrentTime()),
         modified_at,
         playing: isPlaying,
@@ -125,6 +137,15 @@ async function putData(isPlaying = false) {
     updateModifiedAt(modified_at);
 
     await fetch("/timestamp", {
+        method: "PUT",
+        headers: {
+            Accept: "application/json",
+            "Access-Control-Allow-Headers": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    await fetch("/timestamps", {
         method: "PUT",
         headers: {
             Accept: "application/json",

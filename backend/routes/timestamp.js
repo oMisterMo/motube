@@ -33,8 +33,10 @@ const timestampPOST = (req, res) => {
 };
 const timestampPUT = (req, res) => {
     const data = req.body;
-    console.log(data);
 
+    if (data.timestamp === 0) {
+        return res.status(200).send("Video has not started yet...");
+    }
     if (data.timestamp) {
         const file = fs.readFileSync(filePath, "utf-8");
         const updatedData = Object.assign(JSON.parse(file), data);

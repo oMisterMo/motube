@@ -20,6 +20,14 @@
                 height: 100vh; /* Fallback for browsers that do not support Custom Properties */
                 height: calc(var(--vh, 1vh) * 100);
             }
+
+            #mo {
+                background-color: bisque;
+                border: 2px solid;
+                padding: 15px 30px;
+                border-radius: 10px;
+                margin: 20px;
+            }
         </style>
     </head>
     <body>
@@ -27,6 +35,10 @@
             <!-- Back button -->
             <button id="back" class="absolute left-2">
                 <img class="h-12 w-12" src="assets/back.svg" />
+            </button>
+            <button id="mo" class="absolute right-2">
+                fetch
+                <!-- <img class="h-12 w-12" src="assets/back.svg" /> -->
             </button>
             <div class="m-auto max-w-[640px] rounded-lg border border-white p-4 shadow-2xl">
                 <!-- Youtube player -->
