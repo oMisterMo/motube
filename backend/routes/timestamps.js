@@ -19,11 +19,11 @@ if (!fs.existsSync(filePath)) {
     fs.writeFileSync("./backend/data/" + filename, JSON.stringify([]));
 }
 
-const timestampGET = (req, res) => {
+const timestampsGET = (req, res) => {
     const file = fs.readFileSync(filePath, "utf-8");
     return res.type("json").send(file);
 };
-const timestampPOST = (req, res) => {
+const timestampsPOST = (req, res) => {
     const videoJSON = req.body;
     console.log("video is: ", videoJSON);
 
@@ -55,7 +55,7 @@ const timestampPOST = (req, res) => {
     }
     return res.status(500).send("No url found.");
 };
-const timestampPUT = (req, res) => {
+const timestampsPUT = (req, res) => {
     const videoJSON = req.body;
 
     // console.log("video to update: ", videoJSON);
@@ -95,8 +95,8 @@ const timestampPUT = (req, res) => {
 //     console.log("timestamp middleware");
 //     next();
 // });
-router.get("/", timestampGET);
-router.post("/", timestampPOST);
-router.put("/", timestampPUT);
+router.get("/", timestampsGET);
+router.post("/", timestampsPOST);
+router.put("/", timestampsPUT);
 
 module.exports = router;

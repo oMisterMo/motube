@@ -62,9 +62,9 @@ $(async function () {
             try {
                 const youtubeURL = new URL(url);
                 if (youtubeURL.searchParams.get("v")) {
-                    // NOT GONNA NEED line 66, HAPPENS IN BACKEND NOW
-                    await postData(url);
-                    a.href = "/search?v=" + url;
+                    // 0 = new video (add to db)
+                    // 1 = exisiting video
+                    a.href = "/search?v=" + url + "&type=0";
                 } else {
                     console.error("Not youtube video...");
                     return;
