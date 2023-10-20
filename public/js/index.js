@@ -62,6 +62,7 @@ $(async function () {
             try {
                 const youtubeURL = new URL(url);
                 if (youtubeURL.searchParams.get("v")) {
+                    // NOT GONNA NEED line 66, HAPPENS IN BACKEND NOW
                     await postData(url);
                     a.href = "/search?v=" + url;
                 } else {

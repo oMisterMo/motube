@@ -235,12 +235,18 @@ async function setTableData() {
     console.log("data: ", data);
 
     for (let i = 0; i < data.length; i++) {
+        const timestamp = data[i];
         const tr = document.createElement("tr");
         const td = document.createElement("td");
         const td2 = document.createElement("td");
 
-        td.innerText = data[i]?.title || data[i]?.id || "Not found";
-        td2.innerText = data[i]?.timestamp;
+        const a = document.createElement("a");
+
+        a.setAttribute("href", "/search?v=" + timestamp?.url);
+        a.innerText = timestamp?.title || timestamp?.id || "Not found";
+
+        td.innerHTML = a.outerHTML;
+        td2.innerText = timestamp?.timestamp;
 
         tr.appendChild(td);
         tr.appendChild(td2);
