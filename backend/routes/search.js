@@ -14,19 +14,19 @@ const searchGET = async (req, res) => {
 
     // === Add test here ===
 
-    const query = url.parseURL(youtubeURL).query;
-    const params = new URLSearchParams(query);
+    // const query = url.parseURL(youtubeURL).query;
+    // const params = new URLSearchParams(query);
 
-    const videoJSON = {
-        id: params.get("v"),
-        url: youtubeURL,
-        timestamp: 0,
-        created_at: Date.now(),
-        modified_at: Date.now(),
-    };
+    // const videoJSON = {
+    //     id: params.get("v"),
+    //     url: youtubeURL,
+    //     timestamp: 0,
+    //     created_at: Date.now(),
+    //     modified_at: Date.now(),
+    // };
 
-    // Save data of video to watch
-    console.log("data created: ", videoJSON);
+    // // Save data of video to watch
+    // console.log("data created: ", videoJSON);
 
     // Load search page
     try {

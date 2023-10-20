@@ -12,11 +12,11 @@ let seconds = 0;
 // Update seconds
 
 const filename = "videos.json";
-const filePath = path.resolve(__dirname, "../", filename);
+const filePath = path.resolve(__dirname, "../data", filename);
 
 if (!fs.existsSync(filePath)) {
     console.log(`Can not find ${filename}, creating it now...`);
-    fs.writeFileSync("./backend/" + filename, JSON.stringify([]));
+    fs.writeFileSync("./backend/data/" + filename, JSON.stringify([]));
 }
 
 const timestampGET = (req, res) => {
