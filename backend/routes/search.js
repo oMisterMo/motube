@@ -42,6 +42,7 @@ const timestampsPOST = (req, res) => {
         // Reuse data from saved file
         videoJSON.created_at = timestampsJSON[foundIndex].created_at;
         videoJSON.timestamp = timestampsJSON[foundIndex].timestamp;
+        videoJSON.playing = false;
 
         // Set updated modified date
         timestampsJSON[foundIndex].modified_at = videoJSON.modified_at;
