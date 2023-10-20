@@ -2,10 +2,13 @@ injectYoutubeAPI();
 
 let done = false; // Do not really need...!
 let player;
+
+const VIDEO_OFFSET = 2; // Extra time added to video in seconds
 const WAIT_MS = 500; // Youtube player plays videos in seconds, send interval 2 times a second
 const intervals = [];
 const back = document.querySelector("#back");
 const mo = document.querySelector("#mo");
+
 back.addEventListener("click", async () => {
     clearAllIntervals();
     player.stopVideo();
@@ -37,7 +40,7 @@ async function onYouTubeIframeAPIReady() {
         videoId,
         // Query params
         playerVars: {
-            start: timestamp,
+            start: timestamp + VIDEO_OFFSET,
             autoplay: playing ?? 1,
             mute: playing ?? 1,
             // playsinline: 1,

@@ -6,6 +6,7 @@ $(async function () {
     const search = document.querySelector("#search");
     const searchButton = document.querySelector("#searchConfirm");
     const value = document.querySelector("#timestamp");
+
     const getData = async () => {
         const data = await fetch("/timestamp");
         const timestamp = await data.json();
