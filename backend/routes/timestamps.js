@@ -16,7 +16,7 @@ const filePath = path.resolve(__dirname, "../", filename);
 
 if (!fs.existsSync(filePath)) {
     console.log(`Can not find ${filename}, creating it now...`);
-    fs.writeFileSync("./backend/" + filename, "");
+    fs.writeFileSync("./backend/" + filename, JSON.stringify([]));
 }
 
 const timestampGET = (req, res) => {
