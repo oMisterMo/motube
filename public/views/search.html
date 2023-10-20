@@ -44,13 +44,14 @@
                 <!-- Youtube player -->
                 <div id="player" class="flex w-full"></div>
                 <!-- Table info -->
-                <div class="my-8">
+                <div class="my-2">
+                    <!-- Created info -->
                     <table class="w-full text-left text-gray-500 dark:text-gray-400">
                         <thead
                             class="bg-gray-50 uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
                         >
                             <tr>
-                                <th>Data</th>
+                                <th class="w-4/12">Data</th>
                                 <th>Tme</th>
                             </tr>
                         </thead>
@@ -65,8 +66,20 @@
                             </tr>
                         </tbody>
                     </table>
-                    <!-- <p id="created_at" class="font-mono">Created: Jan 20th 2024</p>
-                    <p id="modified_at" class="font-mono">Modified: Jan 20th 2024</p> -->
+                    <!-- Videos list -->
+                    <div class="max-h-60 overflow-y-auto">
+                        <table class="w-full text-left text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="bg-gray-50 uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+                            >
+                                <tr>
+                                    <th class="w-4/12">Videos</th>
+                                    <th>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-body"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
