@@ -7,7 +7,10 @@ const VIDEO_OFFSET = 2; // Extra time added to video in seconds
 const WAIT_MS = 500; // Youtube player plays videos in seconds, send interval 2 times a second
 const intervals = [];
 const back = document.querySelector("#back");
-const mo = document.querySelector("#mo");
+const fetchButton = document.querySelector("#mo");
+const table = document.querySelector("#history-body");
+
+setTableData();
 
 back.addEventListener("click", async () => {
     clearAllIntervals();
@@ -15,9 +18,8 @@ back.addEventListener("click", async () => {
     await putData(); // set playing false, update time
     window.location.href = "/";
 });
-mo.addEventListener("click", async () => {
-    const data = await fetch("/timestamps");
-    console.log(await data.json());
+fetchButton.addEventListener("click", async () => {
+    setTableData();
 });
 
 console.log("isMobile: ", isMobile());
@@ -122,6 +124,13 @@ async function getData() {
     return timestamp;
 }
 
+async function getTimestamps() {
+    const data = await fetch("/timestamps");
+    const timestamps = await data.json();
+
+    return timestamps;
+}
+
 async function putData(isPlaying = false) {
     // CALLED 2 times a seconds, optimize here!
 
@@ -218,4 +227,24 @@ function isMobile() {
     return toMatch.some(toMatchItem => {
         return navigator.userAgent.match(toMatchItem);
     });
+}
+
+async function setTableData() {
+    console.log("Update table data...");
+    const data = await getTimestamps();
+    console.log("data: ", data);
+
+    for (let i = 0; i < data.length; i++) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        const td2 = document.createElement("td");
+
+        td.innerText = data[i]?.title || data[i]?.id || "Not found";
+        td2.innerText = data[i]?.timestamp;
+
+        tr.appendChild(td);
+        tr.appendChild(td2);
+
+        table.appendChild(tr);
+    }
 }
