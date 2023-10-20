@@ -11,7 +11,13 @@ let seconds = 0;
 // Convert to number
 // Update seconds
 
-const filePath = path.resolve(__dirname, "../videos.json");
+const filename = "videos.json";
+const filePath = path.resolve(__dirname, "../", filename);
+
+if (!fs.existsSync(filePath)) {
+    console.log(`Can not find ${filename}, creating it now...`);
+    fs.writeFileSync("./backend/" + filename, "");
+}
 
 const timestampGET = (req, res) => {
     const file = fs.readFileSync(filePath, "utf-8");
