@@ -60,6 +60,11 @@
 
 @layer components {
     .dark-btn {
-        @apply absolute m-2 w-fit transform rounded-lg border border-gray-300 bg-slate-200 px-2 py-1 text-sm shadow-md ring-1 ring-inset transition duration-300 ease-in-out hover:bg-slate-300;
+        @apply absolute m-2 w-fit transform rounded-lg border border-gray-300 bg-slate-200 px-4 py-3 text-sm font-semibold leading-none shadow-md ring-1 ring-inset transition duration-300 ease-in-out hover:bg-slate-300;
+    }
+
+    .max-container {
+        max-width: 1440px;
+        margin: 0 auto;
     }
 }
