@@ -2,53 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-    background-color: blueviolet;
+@layer base {
+    h1 {
+        background-color: blueviolet;
+    }
+
+    svg {
+        width: 1em;
+        height: 1em;
+    }
+
+    img[src*=".svg"] {
+        width: 100%;
+    }
+
+    table {
+        text-align: left;
+        position: relative;
+        border-collapse: collapse;
+    }
+    th,
+    td {
+        padding: 0.25rem;
+    }
+
+    thead {
+        position: sticky;
+        top: 0;
+    }
+
+    /* Select all even row expect the first */
+    tr:not(:nth-child(1)):nth-child(even) {
+        background-color: #e6f2fe9e;
+    }
+    .dark tr:not(:nth-child(1)):nth-child(even) {
+        color: white;
+    }
+
+    a {
+        outline: none;
+    }
+
+    a:link {
+        color: #12338d;
+    }
+
+    a:focus {
+        text-decoration: none;
+        background: #bae498;
+    }
+
+    a:hover {
+        text-decoration: none;
+        background: #cdfeaa;
+    }
 }
 
-svg {
-    width: 1em;
-    height: 1em;
-}
-
-img[src*=".svg"] {
-    width: 100%;
-}
-
-table {
-    text-align: left;
-    position: relative;
-    border-collapse: collapse;
-}
-th,
-td {
-    padding: 0.25rem;
-}
-
-thead {
-    position: sticky;
-    top: 0;
-}
-
-/* Select all even row expect the first */
-tr:not(:nth-child(1)):nth-child(even) {
-    background-color: #e6f2fe9e;
-}
-
-a {
-    outline: none;
-}
-
-a:link {
-    color: #12338d;
-}
-
-a:focus {
-    text-decoration: none;
-    background: #bae498;
-}
-
-a:hover {
-    text-decoration: none;
-    background: #cdfeaa;
+@layer components {
+    .dark-btn {
+        @apply absolute m-2 w-fit transform rounded-lg border border-gray-300 bg-slate-200 px-2 py-1 text-sm shadow-md ring-1 ring-inset transition duration-300 ease-in-out hover:bg-slate-300;
+    }
 }
