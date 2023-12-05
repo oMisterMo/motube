@@ -14,13 +14,35 @@
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
             crossorigin="anonymous"
         ></script>
+
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", () => {
+                // Toggle 'dark' class to html elemnt
+                const toggle = document.getElementById("darkToggle");
+                toggle.addEventListener("click", () => {
+                    if (document.documentElement.classList.contains("dark")) {
+                        document.documentElement.classList.remove("dark");
+                    } else {
+                        document.documentElement.classList.add("dark");
+                    }
+                });
+            });
+        </script>
         <script src="../js/index.js" defer></script>
     </head>
 
     <body class="font-sans antialiased">
         <div id="app" class="flex min-h-screen flex-col bg-gray-100 bg-cover" data-v-app="">
+            <!-- Dark mode toggle -->
+            <button
+                id="darkToggle"
+                class="absolute m-2 w-fit rounded-lg border border-gray-300 bg-slate-200 px-2 text-lg ring-1 ring-inset"
+                onclick="document.body.classList.toggle('dark')"
+            >
+                Dark
+            </button>
             <!-- Main -->
-            <header class="flex min-h-screen flex-col bg-neutral-100 px-3">
+            <header class="flex min-h-screen flex-col bg-neutral-100 px-3 dark:bg-neutral-800">
                 <form
                     class="flex flex-grow flex-col items-center justify-center"
                     autocomplete="off"
