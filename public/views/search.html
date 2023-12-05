@@ -15,6 +15,31 @@
             // Then we set the value in the --vh custom property to the root of the document
             document.documentElement.style.setProperty("--vh", `${vh}px`);
         </script>
+        <script type="text/javascript">
+            // Front video
+            // document.addEventListener("DOMContentLoaded", () => {
+            //     // Toggle 'dark' class to html elemnt
+            //     const toggle = document.getElementById("darkToggle");
+            //     toggle.addEventListener("click", () => {
+            //         if (document.documentElement.classList.contains("dark")) {
+            //             document.documentElement.classList.remove("dark");
+            //         } else {
+            //             document.documentElement.classList.add("dark");
+            //         }
+            //     });
+            // });
+
+            // From tailwindcss.com
+            if (
+                localStorage.theme === "dark" ||
+                (!("theme" in localStorage) &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        </script>
         <style>
             #main {
                 height: 100vh; /* Fallback for browsers that do not support Custom Properties */
@@ -34,7 +59,7 @@
         </style>
     </head>
     <body>
-        <div id="main" class="relative h-screen w-screen">
+        <div id="main" class="relative h-screen w-screen dark:bg-neutral-800">
             <!-- Back button -->
             <button id="back" class="absolute left-2">
                 <img class="h-12 w-12" src="assets/back.svg" />
